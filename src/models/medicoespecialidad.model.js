@@ -1,36 +1,35 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database';
-import { Medico } from './medicos.model';
-import { Especialidad } from './especialidades.model';
+import { Medico } from './medico.model';
+import { Especialidad } from './especialidad.model';
 
 export const MedicoEspecialidad = sequelize.define(
-    "medicos_especialidades",
+    "medico_especialidad",
     {
         _id_med_esp: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
             allowNull: false
         },
-        _id_medico: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
+        medico: {
+            type: DataTypes.CHAR(10),
             allowNull: false,
             references: {
-                model: 'medicos',
+                model: Medico,
                 key: '_id_medico'
             }
         },
-        _id_especialidad: {
+        especialidad: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             allowNull: false,
             references: {
-                model: 'especialidades',
+                model: Especialidad,
                 key: '_id_especialidad'
             }
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );

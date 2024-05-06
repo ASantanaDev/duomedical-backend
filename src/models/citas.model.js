@@ -1,12 +1,13 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database";
 import { Paciente } from "./pacientes.model";   
-import { Servicio } from "./servicios.model";   
+import { Medico } from "./medico.model";  
+import { EstadoCita } from "./estadocita.model";
 
 
 //TODO: Redefinir campos
 export const Cita = sequelize.define(
-    "citas",
+    "cita",
     {
         _id_cita: {
             type: DataTypes.INTEGER,
@@ -14,32 +15,36 @@ export const Cita = sequelize.define(
             autoIncrement: true,
             allowNull: false
         },
-        _id_paciente: {
-            type: DataTypes.INTEGER,
+        medico: {
+            type: DataTypes.CHAR(10),
+            allowNull: false,
+            references: {
+                model: Medico,
+                key: '_id_medico'
+            }
+        },
+        paciente: {
+            type: DataTypes.CHAR(10),
             allowNull: false,
             references: {
                 model: Paciente,
                 key: '_id_paciente'
             }
         },
-        _id_servicio: {
+        estado_cita: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: Servicio,
-                key: '_id_servicio'
+                model: EstadoCita,
+                key: '_id_estado_cita'
             }
         },
-        _id_atencion: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        estado: {
-            type: DataTypes.STRING(50),
+        fecha_cita: {
+            type: DataTypes.DATE,
             allowNull: false
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );

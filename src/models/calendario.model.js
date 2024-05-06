@@ -1,31 +1,30 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database';
-import { Usuario } from './usuarios.model';
+import { Horario } from './horario.model';
 
-export const Medico = sequelize.define(
-    "medicos",
+export const Calendario = sequelize.define(
+    'calendario',
     {
-        _id_medico: {
+        _id_calendario: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
         },
-        _id_usuario: {
-            type: DataTypes.CHAR(10),
+        horario: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: Usuario,
-                key: '_id_usuario'
+                model: Horario,
+                key: '_id_horario'
             }
         },
-        descripcion: {
-            type: DataTypes.STRING(500),
+        fecha: {
+            type: DataTypes.DATE,
             allowNull: false
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );
-

@@ -2,7 +2,7 @@ export { DataTypes } from 'sequelize';
 export { sequelize } from '../config/database';
 
 export const Especialidad = sequelize.define(
-    "especialidades",
+    "especialidad",
     {
         _id_especialidad: {
             type: DataTypes.INTEGER,
@@ -10,12 +10,12 @@ export const Especialidad = sequelize.define(
             autoIncrement: true,
             allowNull: false
         },
-        nombre: {
-            type: DataTypes.STRING(250),
+        especialidad: {
+            type: DataTypes.STRING(255),
             allowNull: false
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );

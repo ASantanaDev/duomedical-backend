@@ -1,21 +1,21 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database';
 
-export const Servicio = sequelize.define(
-    "servicios",
+export const TipoSangre = sequelize.define(
+    'tipo_sangre',
     {
-        _id_servicio: {
+        _id_tipo_sangre: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             autoIncrement: true,
+            primaryKey: true,
             allowNull: false
         },
-        servicio: {
-            type: DataTypes.STRING(250),
+        tipo_sangre: {
+            type: DataTypes.STRING(5),
             allowNull: false
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );

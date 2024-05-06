@@ -1,51 +1,51 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database";
+import { Rol } from "./rol.model";
 
 export const Usuario = sequelize.define(
-    "usuarios", 
+    "usuario", 
     {
         _id_usuario: {
-            type: Sequelize.CHAR(10),
+            type: DataTypes.CHAR(10),
             primaryKey: true,
             allowNull: false
         },
         primer_nombre: {
-            type: Sequelize.STRING(100),
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         segundo_nombre: {
-            type: Sequelize.STRING(100),
+            type: DataTypes.STRING(255),
             allowNull: true
         },
         primer_apellido: {
-            type: Sequelize.STRING(100),
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         segundo_apellido: {
-            type: Sequelize.STRING(100),
+            type: DataTypes.STRING(255),
             allowNull: true
         },
         contacto: {
-            type: Sequelize.STRING(10),
+            type: DataTypes.STRING(10),
             allowNull: false
         },
         email: {
-            type: Sequelize.STRING(200),
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         password: {
-            type: Sequelize.STRING(500),
+            type: DataTypes.STRING(255),
             allowNull: false
         },
-        IsDoctor: {
-            type: Sequelize.BOOLEAN,
+        rol: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: false
-        },
-        IsAdmin: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
+            defaultValue: 3,
+            references: {
+                model: Rol,
+                key: '_id_rol'
+            }
         },
     },
     { 
