@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database';
+import { sequelize } from '../config/database.js';
 
 export const Servicio = sequelize.define(
     "servicio",
@@ -17,5 +17,6 @@ export const Servicio = sequelize.define(
     },
     {
         timestamps: true,
+        freezeTableName: true,
     }
 );

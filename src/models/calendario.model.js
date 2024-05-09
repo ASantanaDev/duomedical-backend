@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database';
-import { Horario } from './horario.model';
+import { sequelize } from '../config/database.js';
+import { Horario } from './horario.model.js';
 
 export const Calendario = sequelize.define(
     'calendario',
@@ -23,8 +23,13 @@ export const Calendario = sequelize.define(
             type: DataTypes.DATE,
             allowNull: false
         },
+        estado_calendario: {
+            type: DataTypes.ENUM('Ocupado', 'Desocupado'),
+            allowNull: false
+        },
     },
     {
         timestamps: true,
+        freezeTableName: true,
     }
 );

@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database';
-import { Usuario } from './usuarios.model';
-import { TipoSangre } from './tiposangre.model';
-import { Sexo } from './sexo.model';
+import { sequelize } from '../config/database.js';
+import { Usuario } from './usuario.model.js';
+import { TipoSangre } from './tiposangre.model.js';
+import { Sexo } from './sexo.model.js';
 
 export const Paciente = sequelize.define(
     "paciente",
@@ -28,14 +28,6 @@ export const Paciente = sequelize.define(
                 key: '_id_tipo_sangre'
             }
         },
-        sexo: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: Sexo,
-                key: '_id_sexo'
-            }
-        },
         peso: {
             type: DataTypes.FLOAT,
             allowNull: false
@@ -44,9 +36,18 @@ export const Paciente = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false
         },
+        sexo: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Sexo,
+                key: '_id_sexo'
+            }
+        },
 
     },
     {
         timestamps: true,
+        freezeTableName: true,
     }
 );

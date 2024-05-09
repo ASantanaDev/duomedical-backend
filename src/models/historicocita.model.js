@@ -1,13 +1,11 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-import { Paciente } from "./pacientes.model.js";   
-import { Medico } from "./medico.model.js";  
 
 
-export const Cita = sequelize.define(
-    "cita",
+export const HistoricoCita = sequelize.define(
+    "historico_cita",
     {
-        _id_cita: {
+        _id_historico_cita: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -16,18 +14,10 @@ export const Cita = sequelize.define(
         medico: {
             type: DataTypes.CHAR(10),
             allowNull: false,
-            references: {
-                model: Medico,
-                key: '_id_medico'
-            }
         },
         paciente: {
             type: DataTypes.CHAR(10),
             allowNull: false,
-            references: {
-                model: Paciente,
-                key: '_id_paciente'
-            }
         },
         estado_cita: {
             type: DataTypes.ENUM,

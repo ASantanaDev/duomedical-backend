@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/database";
-import { Rol } from "./rol.model";
+import { sequelize } from "../config/database.js";
+import { Rol } from "./rol.model.js";
 
 export const Usuario = sequelize.define(
     "usuario", 
@@ -27,7 +27,7 @@ export const Usuario = sequelize.define(
             allowNull: true
         },
         contacto: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.CHAR(10),
             allowNull: false
         },
         email: {
@@ -50,5 +50,6 @@ export const Usuario = sequelize.define(
     },
     { 
         timestamps: true,
+        freezeTableName: true,
     }
 );

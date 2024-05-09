@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database';
-import { Usuario } from './usuarios.model';
+import { sequelize } from '../config/database.js';
+import { Usuario } from './usuario.model.js';
 
 export const Medico = sequelize.define(
     "medico",
@@ -15,12 +15,13 @@ export const Medico = sequelize.define(
             }
         },
         descripcion: {
-            type: DataTypes.STRING(500),
+            type: DataTypes.TEXT,
             allowNull: false
         },
     },
     {
         timestamps: true,
+        freezeTableName: true,
     }
 );
 

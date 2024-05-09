@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database';
-import { Cita } from './cita.model';
-import { Tratamiento } from './tratamiento.model';
+import { sequelize } from '../config/database.js';
+import { Cita } from './citas.model.js';
+import { Tratamiento } from './tratamiento.model.js';
 
 export const TratamientoCita = sequelize.define(
     'tratamiento_cita',
@@ -31,5 +31,6 @@ export const TratamientoCita = sequelize.define(
     },
     {
         timestamps: true,
+        freezeTableName: true,
     }
 );

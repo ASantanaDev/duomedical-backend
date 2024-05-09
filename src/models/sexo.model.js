@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database';
+import { sequelize } from '../config/database.js';
 
 export const Sexo = sequelize.define(
     'sexo',
@@ -17,5 +17,6 @@ export const Sexo = sequelize.define(
     },
     {
         timestamps: true,
+        freezeTableName: true,
     }
 );
