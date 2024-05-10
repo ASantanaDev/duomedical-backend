@@ -4,7 +4,7 @@ import app from "./src/app.js"
 async function main() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
+    //await sequelize.sync();
     var PORT = process.env.PORT || 3000;
 
     app.listen(PORT, () => {
