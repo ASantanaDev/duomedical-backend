@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "../../../loadEnv.js";
 
-//Sign Up
+//Sign Up - Crear usuario
 export const signUp = async (req, res) => {
   try {
     const { 
@@ -84,6 +84,7 @@ export const signUp = async (req, res) => {
     });
 
     return res.status(201).json({
+      status: true,
       message: "Usuario registrado exitosamente",
       data: usuario,
     });
@@ -95,7 +96,7 @@ export const signUp = async (req, res) => {
   }
 };
 
-//Sign In
+//Sign In - Login de usuario
 export const signIn = async (req, res) => {
   try {
     // validación de datos
@@ -105,7 +106,7 @@ export const signIn = async (req, res) => {
     if (!email || !password) {
       return res
         .status(400)
-        .json({ error: "Todos los campos son obligatorios" });
+        .json({ message: "Todos los campos son obligatorios" });
     }
 
     // Validar el formato del correo electrónico
@@ -113,7 +114,7 @@ export const signIn = async (req, res) => {
     if (!emailValid.test(email)) {
       return res
         .status(400)
-        .json({ error: "El formato del correo electrónico es inválido" });
+        .json({ message: "El formato del correo electrónico es inválido" });
     }
 
     // verificar si el usuario ya existe
@@ -121,7 +122,7 @@ export const signIn = async (req, res) => {
     if (!usuarioExistente) {
       return res
         .status(400)
-        .json({ error: "El correo electronico no está registrado" });
+        .json({ message: "El correo electronico no está registrado" });
     }
 
     // verificar contraseña
@@ -130,7 +131,7 @@ export const signIn = async (req, res) => {
       usuarioExistente.password
     );
     if (!passwordValida) {
-      return res.status(400).json({ error: "Contraseña incorrecta" });
+      return res.status(400).json({ message: "Contraseña incorrecta" });
     }
 
     // Crear token
@@ -160,11 +161,13 @@ export const signIn = async (req, res) => {
 
     // Devolver respuesta adecuada
     return res.status(200).json({
+      status: true,
       message: "Ingreso de usuario exitoso",
-      token,
+      data: token,
     });
   } catch (error) {
     return res.status(500).json({
+      status: false,
       message: "Error en el ingreso de usuario",
     });
   }
