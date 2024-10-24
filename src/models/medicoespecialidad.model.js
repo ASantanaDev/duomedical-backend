@@ -21,11 +21,11 @@ export const MedicoEspecialidad = sequelize.define(
         },
         titulo: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         no_registro: {
             type: DataTypes.STRING(255),
-            allowNull: false,
+            allowNull: true,
         },
     },
     {

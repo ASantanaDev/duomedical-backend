@@ -16,7 +16,7 @@ export const Medico = sequelize.define(
         },
         descripcion: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
     },
     {

@@ -18,11 +18,11 @@ export const Paciente = sequelize.define(
         },
         fecha_nacimiento: {
             type: DataTypes.DATEONLY,
-            allowNull: false
+            allowNull: true
         },
         tipo_sangre: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: TipoSangre,
                 key: '_id_tipo_sangre'
@@ -30,15 +30,15 @@ export const Paciente = sequelize.define(
         },
         peso: {
             type: DataTypes.FLOAT,
-            allowNull: false
+            allowNull: true
         },
         altura: {
             type: DataTypes.FLOAT,
-            allowNull: false
+            allowNull: true
         },
         sexo: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: Sexo,
                 key: '_id_sexo'
