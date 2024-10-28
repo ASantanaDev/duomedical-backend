@@ -1,7 +1,7 @@
 import { Horario } from '../../models/horario.model.js';
 
 //Obtener horarios
-export const getHorarios = async (req, res) => {
+export const getHorarios = async (res) => {
   try {
     const horarios = await Horario.findAll();
 
