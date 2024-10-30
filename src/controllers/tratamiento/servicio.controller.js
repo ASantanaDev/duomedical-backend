@@ -5,23 +5,15 @@ export const createServicio = async (req, res) => {
   try {
     const { servicio } = req.body;
 
-    if (!servicio) {
-      return res
-        .status(400)
-        .json({ error: "Todos los campos son obligatorios" });
-    }
+    const newServicio = await Servicio.create({ servicio });
 
-    const nuevoServicio = await Servicio.create({ servicio });
-
-    return res.status(201).json({
-      status: true,
-      message: "Servicio creado exitosamente",
-      data: nuevoServicio,
+    return res.json({ 
+        message: "Servicio creado", 
+        servicio: newServicio 
     });
   } catch (error) {
-    console.error("Error al crear el servicio:", error);
     return res.status(500).json({ 
-        message: "Error al crear el servicio" 
+        error: error.message 
     });
   }
 };
