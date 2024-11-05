@@ -30,18 +30,19 @@ export const requestPasswordReset = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "1h" }
     );
-    const url = `http://localhost:3000/reset-password/${token}`;
+    const url = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
     // Enviar el correo de restablecimiento de contraseña
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Restablecimiento de contraseña",
-      html: `<p>Haga clic en el siguiente enlace para restablecer su contraseña: <a href="${url}">${url}</a></p>`,
+      html: `<p>Haga clic en el siguiente enlace para restablecer su contraseña: <br> <a href="${url}">${url}</a></p>`,
     });
 
     return res.status(200).json({
-      message: "Se ha enviado un enlace para restablecer la contraseña",
+      message:
+        "Se ha enviado un enlace para restablecer la contraseña. Por favor revise su correo electrónico.",
     });
   } catch (error) {
     console.error(error);

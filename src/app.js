@@ -1,5 +1,7 @@
 import cors from "cors";
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import authRoutes from "./routes/auth.routes.js";
 import calendarioRoutes from "./routes/calendario.routes.js";
@@ -10,6 +12,9 @@ import servicioRoutes from "./routes/servicio.routes.js";
 import usuarioRoutes from "./routes/usuario.routes.js";
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //middlewares
 app.use(cors({
@@ -31,5 +36,12 @@ app.use(
     servicioRoutes,
     usuarioRoutes,
 );
+
+//static files
+app.use(express.static(path.join(__dirname, '../../duomedical-frontend/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../duomedical-frontend/dist', 'index.html'));
+  });
 
 export default app;
