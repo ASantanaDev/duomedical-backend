@@ -36,8 +36,17 @@ export const requestPasswordReset = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Restablecimiento de contraseña",
-      html: `<p>Haga clic en el siguiente enlace para restablecer su contraseña: <br> <a href="${url}">${url}</a></p>`,
+      subject: "Solicitud de Restablecimiento de Contraseña",
+      html: `
+        <p>Hola ${usuario.primer_nombre || 'Usuario'},</p>
+        <p>Recibimos una solicitud para restablecer la contraseña de tu cuenta. Para continuar, haz clic en el enlace a continuación:</p>
+        <p><a href="${url}" style="color: #1a73e8;">Restablecer mi contraseña</a></p>
+        <p>Este enlace es válido por <strong>1 hora</strong>. Si no realizaste esta solicitud, puedes ignorar este mensaje; tu cuenta permanecerá segura.</p>
+        <p>Si tienes algún problema, no dudes en contactarnos.</p>
+        <br>
+        <p>Saludos,</p>
+        <p>El equipo de Duo Medical Esthetic</p>
+      `,
     });
 
     return res.status(200).json({

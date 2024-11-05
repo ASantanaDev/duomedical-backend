@@ -11,9 +11,7 @@ export const createPatient = async (req, res) => {
     const { 
       _id_usuario, 
       primer_nombre, 
-      segundo_nombre, 
-      primer_apellido, 
-      segundo_apellido,
+      primer_apellido,
       contacto,
       email, 
       password,
@@ -22,9 +20,7 @@ export const createPatient = async (req, res) => {
     if (
       !_id_usuario ||
       !primer_nombre ||
-      !segundo_nombre ||
       !primer_apellido ||
-      !segundo_apellido ||
       !contacto ||
       !email ||
       !password
@@ -73,9 +69,9 @@ export const createPatient = async (req, res) => {
     const usuario = await Usuario.create({
       _id_usuario,
       primer_nombre,
-      segundo_nombre,
+      segundo_nombre: null,
       primer_apellido,
-      segundo_apellido,
+      segundo_apellido: null,
       contacto,
       email,
       password: passwordHash,
