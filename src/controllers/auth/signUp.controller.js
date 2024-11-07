@@ -76,6 +76,8 @@ export const createPatient = async (req, res) => {
       email,
       password: passwordHash,
       rol: 3,
+      password_reset_code: null,
+      password_reset_code_expires: null,
     });
 
     const paciente = await Paciente.create({

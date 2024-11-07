@@ -24,24 +24,24 @@ export const requestPasswordReset = async (req, res) => {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Crear un token para el restablecimiento de contraseña
-    const token = jwt.sign(
-      { _id_usuario: usuario._id_usuario },
-      process.env.SECRET_KEY,
-      { expiresIn: "1h" }
-    );
-    const url = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const expirationTime = new Date(Date.now() + 15 * 60 * 1000); // Expira en 15 minutos
+    const url = `${process.env.FRONTEND_URL}/reset-password`;
 
-    // Enviar el correo de restablecimiento de contraseña
+    usuario.password_reset_code = code;
+    usuario.password_reset_code_expires = expirationTime;
+    await usuario.save();
+
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Solicitud de Restablecimiento de Contraseña",
       html: `
-        <p>Hola ${usuario.primer_nombre || 'Usuario'},</p>
+        <p>Hola ${usuario.primer_nombre || "Usuario"},</p>
         <p>Recibimos una solicitud para restablecer la contraseña de tu cuenta. Para continuar, haz clic en el enlace a continuación:</p>
         <p><a href="${url}" style="color: #1a73e8;">Restablecer mi contraseña</a></p>
-        <p>Este enlace es válido por <strong>1 hora</strong>. Si no realizaste esta solicitud, puedes ignorar este mensaje; tu cuenta permanecerá segura.</p>
+        <p>Tu código de restablecimiento de contraseña es: <strong>${code}</strong></p><p>Este código expira en 15 minutos.</p>
+        <p>Si no realizaste esta solicitud, puedes ignorar este mensaje; tu cuenta permanecerá segura.</p>
         <p>Si tienes algún problema, no dudes en contactarnos.</p>
         <br>
         <p>Saludos,</p>
@@ -62,31 +62,33 @@ export const requestPasswordReset = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+  const { email, code, password } = req.body;
+  console.log('Datos recibidos:', { email, code, password });
 
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const usuario = await Usuario.findOne({
-      where: { _id_usuario: decoded._id_usuario },
-    });
+    const usuario = await Usuario.findOne({ where: { email } });
 
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    if (usuario.password_reset_code !== code || new Date(usuario.password_reset_code_expires) < new Date()) {
+      return res.status(400).json({ message: "Código inválido o expirado" });
     }
 
     // Hashear la nueva contraseña
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
     usuario.password = passwordHash;
+    usuario.password_reset_code = null;
+    usuario.password_reset_code_expires = null;
 
     await usuario.save();
 
-    return res
-      .status(200)
-      .json({ message: "Contraseña restablecida con éxito" });
+    return res.status(200).json({ message: "Contraseña restablecida con éxito" });
   } catch (error) {
     console.error(error);
-    return res.status(400).json({ message: "Token inválido o expirado" });
+    return res.status(500).json({ message: "Error al restablecer la contraseña" });
   }
 };
+

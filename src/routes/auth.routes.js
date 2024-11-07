@@ -11,7 +11,7 @@ const authRoutes =  Router();
 authRoutes.post('/signup', authCtrl.createPatient);
 authRoutes.post('/signin', signInCtrl.signIn);
 authRoutes.post('/reset-password-request', resetPasswordCtrl.requestPasswordReset);
-authRoutes.post('/reset-password/:token', resetPasswordCtrl.resetPassword);
+authRoutes.post('/reset-password', resetPasswordCtrl.resetPassword);
 
 router.use('/api/auth', authRoutes);
 
