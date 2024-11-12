@@ -1,7 +1,6 @@
 import { Usuario } from "../../models/usuario.model.js";
 
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
 import "../../../loadEnv.js";
@@ -66,13 +65,13 @@ export const resetPassword = async (req, res) => {
   console.log('Datos recibidos:', { email, code, password });
 
   try {
-    const usuario = await Usuario.findOne({ where: { email } });
+    const usuario = await Usuario.findOne({ where: { email }  });
 
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    if (usuario.password_reset_code !== code || new Date(usuario.password_reset_code_expires) < new Date()) {
+    if (usuario.password_reset_code !== code || usuario.password_reset_code_expires < Date.now()) {
       return res.status(400).json({ message: "Código inválido o expirado" });
     }
 
