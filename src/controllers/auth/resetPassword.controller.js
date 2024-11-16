@@ -62,20 +62,27 @@ export const requestPasswordReset = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   const { email, code, password } = req.body;
-  console.log('Datos recibidos:', { email, code, password });
+  console.log("Datos recibidos:", { email, code, password });
 
   try {
-    const usuario = await Usuario.findOne({ where: { email }  });
+    const usuario = await Usuario.findOne({ where: { email } });
 
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    if (usuario.password_reset_code !== code || usuario.password_reset_code_expires < Date.now()) {
-      return res.status(400).json({ message: "Código inválido o expirado" });
+    if (usuario.password_reset_code !== code) {
+      return res
+        .status(400)
+        .json({ message: "Código de verificación inválido" });
     }
 
-    // Hashear la nueva contraseña
+    if (usuario.password_reset_code_expires < new Date()) {
+      return res
+        .status(400)
+        .json({ message: "El código de verificación ha expirado" });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
     usuario.password = passwordHash;
@@ -84,10 +91,13 @@ export const resetPassword = async (req, res) => {
 
     await usuario.save();
 
-    return res.status(200).json({ message: "Contraseña restablecida con éxito" });
+    return res
+      .status(200)
+      .json({ message: "Contraseña restablecida con éxito" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error al restablecer la contraseña" });
+    return res
+      .status(500)
+      .json({ message: "Error al restablecer la contraseña" });
   }
 };
-
