@@ -6,7 +6,7 @@ import * as patientCtrl from "../controllers/usuario/paciente.controller.js"
 
 const patientRoutes = Router();
 
-patientRoutes.post('/updateInfo/:_id_paciente', patientCtrl.updatePatient);
+patientRoutes.put('/updateInfo/:_id_paciente', patientCtrl.updatePatient);
 patientRoutes.get('/showInfo/:_id_paciente', patientCtrl.getPatientInfo);
 
 router.use('/api/paciente', patientRoutes);
