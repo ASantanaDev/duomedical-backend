@@ -27,14 +27,14 @@ export const createPatient = async (req, res) => {
     ) {
       return res
         .status(400)
-        .json({ error: "Todos los campos son obligatorios" });
+        .json({ error: "Todos los campos son obligatorios." });
     }
 
     // Validar cédula
     if (!validarCedula(_id_usuario)) {
       return res
         .status(400)
-        .json({ error: "La cédula proporcionada no es válida" });
+        .json({ error: "La cédula proporcionada no es válida." });
     }
 
     //verificar si la cedula ya existe
@@ -42,7 +42,7 @@ export const createPatient = async (req, res) => {
       where: { _id_usuario: _id_usuario },
     });
     if (cedulaExistente) {
-      return res.status(400).json({ error: "La cédula ya existe" });
+      return res.status(400).json({ error: "El número de cédula ya está registrado." });
     }
 
     // Validar el formato del correo electrónico
@@ -50,7 +50,7 @@ export const createPatient = async (req, res) => {
     if (!emailValid.test(email)) {
       return res
         .status(400)
-        .json({ error: "El formato del correo electrónico es inválido" });
+        .json({ error: "El formato del correo electrónico es inválido." });
     }
 
     //verificar si el usuario ya existe
@@ -58,7 +58,7 @@ export const createPatient = async (req, res) => {
     if (usuarioExistente) {
       return res
         .status(400)
-        .json({ error: "El correo electronico ya está registrado" });
+        .json({ error: "El correo electronico ya está registrado." });
     }
 
     //Hashear contraseña

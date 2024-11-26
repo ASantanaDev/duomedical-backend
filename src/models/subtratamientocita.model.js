@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
 import { Cita } from './citas.model.js';
-import { Tratamiento } from './tratamiento.model.js';
+import { Subtratamiento } from './subtratamiento.model.js';
 
-export const TratamientoCita = sequelize.define(
+export const SubtratamientoCita = sequelize.define(
     'tratamiento_cita',
     {
         _id_tratamiento_cita: {
@@ -12,12 +12,12 @@ export const TratamientoCita = sequelize.define(
             autoIncrement: true,
             allowNull: false
         },
-        tratamiento: {
+        subtratamiento: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: Tratamiento,
-                key: '_id_tratamiento'
+                model: Subtratamiento,
+                key: '_id_subtratamiento'
             }
         },
         cita: {

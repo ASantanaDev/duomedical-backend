@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
 import { Medico } from './medico.model.js';
+import { Servicio } from './servicio.model.js';
 
 export const MedicoEspecialidad = sequelize.define(
     "medico_especialidad",
@@ -19,14 +20,14 @@ export const MedicoEspecialidad = sequelize.define(
                 key: '_id_medico'
             }
         },
-        titulo: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        no_registro: {
-            type: DataTypes.STRING(255),
-            allowNull: true,
-        },
+        especialidad: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Servicio,
+                key: '_id_servicio'
+            }
+        }
     },
     {
         timestamps: true,

@@ -1,28 +1,28 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
-import { Servicio } from './servicio.model.js';
+import { Tratamiento } from './tratamiento.model.js';
 
-export const Tratamiento = sequelize.define(
-    "tratamiento",
+export const Subtratamiento = sequelize.define(
+    'subtratamiento',
     {
-        _id_tratamiento: {
+        _id_subtratamiento: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
         },
-        servicio: {
+        tratamiento: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: Servicio,
-                key: '_id_servicio'
+                model: Tratamiento,
+                key: '_id_tratamiento'
             }
         },
-        tratamiento: {
+        subtratamiento: {
             type: DataTypes.STRING(255),
             allowNull: false
-        },        
+        }
     },
     {
         timestamps: true,
