@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
-import { Servicio } from './servicio.model.js';
+import { Categoria } from './categoria.model.js';
 
 export const Tratamiento = sequelize.define(
-    "tratamiento",
+    'tratamiento',
     {
         _id_tratamiento: {
             type: DataTypes.INTEGER,
@@ -11,18 +11,18 @@ export const Tratamiento = sequelize.define(
             autoIncrement: true,
             allowNull: false
         },
-        servicio: {
+        categoria: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: Servicio,
-                key: '_id_servicio'
+                model: Categoria,
+                key: '_id_categoria'
             }
         },
         tratamiento: {
             type: DataTypes.STRING(255),
             allowNull: false
-        },        
+        }
     },
     {
         timestamps: true,

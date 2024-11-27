@@ -27,7 +27,7 @@ export const Usuario = sequelize.define(
       allowNull: true,
     },
     contacto: {
-      type: DataTypes.CHAR(10),
+      type: DataTypes.CHAR(15),
       allowNull: false,
     },
     email: {

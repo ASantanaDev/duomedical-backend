@@ -2,9 +2,9 @@ import cors from "cors";
 import express from "express";
 import bodyParser from 'body-parser';
 
-
 import authRoutes from "./routes/auth.routes.js";
 import calendarioRoutes from "./routes/calendario.routes.js";
+import categoriaRoutes from "./routes/categoria.routes.js";
 import doctorRoutes from "./routes/medico.routes.js";
 import patientRoutes from "./routes/paciente.routes.js"
 import rolRoutes from "./routes/rol.routes.js";
@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 app.use(
     authRoutes,
     calendarioRoutes,
+    categoriaRoutes,
     doctorRoutes,
     patientRoutes,
     rolRoutes,

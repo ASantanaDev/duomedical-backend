@@ -1,28 +1,23 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
-import { Tratamiento } from './tratamiento.model.js';
 
-export const Subtratamiento = sequelize.define(
-    'subtratamiento',
+export const Categoria = sequelize.define(
+    "categoria",
     {
-        _id_subtratamiento: {
+        _id_categoria: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
         },
-        tratamiento: {
+        servicio: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: Tratamiento,
-                key: '_id_tratamiento'
-            }
         },
-        subtratamiento: {
+        categoria: {
             type: DataTypes.STRING(255),
             allowNull: false
-        }
+        },        
     },
     {
         timestamps: true,

@@ -1,4 +1,5 @@
 import { Servicio } from "../../models/servicio.model.js";
+import { Categoria } from "../../models/categoria.model.js";
 
 //Crear servicio
 export const createServicio = async (req, res) => {
@@ -89,26 +90,42 @@ export const updateServicio = async (req, res) => {
   }
 };
 
-//Eliminar servicio
+// Eliminar servicio y sus categorías asociadas
 export const deleteServicio = async (req, res) => {
   try {
     const { _id_servicio } = req.params;
 
-    const serv = await Servicio.findByPk(_id_servicio);
+    // Buscar el servicio
+    const servicio = await Servicio.findByPk(_id_servicio, {
+      include: [
+        {
+          model: Categoria, // Incluir las categorías asociadas
+          as: "categorias",
+        },
+      ],
+    });
 
-    if (serv) {
-      await serv.destroy();
-      return res.json({ 
-          message: "Servicio eliminado correctamente." 
-      });
-    } else {
-      return res.status(404).json({ 
-          error: "Servicio no encontrado." 
-      });
+    // Verificar si el servicio existe
+    if (!servicio) {
+      return res.status(404).json({ error: "Servicio no encontrado." });
     }
+
+    // Eliminar las categorías asociadas al servicio
+    await Categoria.destroy({
+      where: { servicio: _id_servicio },
+    });
+
+    // Ahora eliminar el servicio
+    await servicio.destroy();
+
+    return res.json({
+      message: "Servicio y sus categorías eliminados correctamente.",
+    });
   } catch (error) {
-    return res.status(500).json({ 
-        error: "Error al eliminar el servicio." 
+    console.error("Error al eliminar el servicio:", error);
+    return res.status(500).json({
+      error: "Error al eliminar el servicio.",
     });
   }
 };
+
