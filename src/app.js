@@ -9,6 +9,7 @@ import doctorRoutes from "./routes/medico.routes.js";
 import patientRoutes from "./routes/paciente.routes.js"
 import rolRoutes from "./routes/rol.routes.js";
 import servicioRoutes from "./routes/servicio.routes.js";
+import tratamientoRoutes from "./routes/tratamiento.routes.js";
 import usuarioRoutes from "./routes/usuario.routes.js";
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(
     patientRoutes,
     rolRoutes,
     servicioRoutes,
+    tratamientoRoutes,
     usuarioRoutes,
 );
 
