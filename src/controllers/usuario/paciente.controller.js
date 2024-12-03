@@ -33,9 +33,9 @@ export const updatePatient = async (req, res) => {
     if (!bloodType) {
       return res.status(400).json({ error: "Tipo de sangre no válido" });
     }
-    
-    const searchedPatient = await Paciente.findByPk(_id_paciente);
+
     const searchedUser = await Usuario.findByPk(_id_paciente);
+    const searchedPatient = await Paciente.findByPk(_id_paciente);
     
     if (searchedUser) {
       searchedUser.primer_nombre = primer_nombre;

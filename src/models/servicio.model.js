@@ -20,3 +20,4 @@ export const Servicio = sequelize.define(
         freezeTableName: true,
     }
 );
+
