@@ -1,6 +1,5 @@
 import { Usuario } from "../../models/usuario.model.js";
 
-
 //Obtener usuario por cédula
 export const getUserById = async (req, res) => {
   try {
@@ -14,17 +13,47 @@ export const getUserById = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
 //Obtener todos los usuarios
 export const getUsers = async (req, res) => {
   try {
-    const users = await Usuario.findAll();
-    return res.json(users);
+    const { page = 1, limit = 10 } = req.query; // Paginación
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Usuario.findAndCountAll({
+      where: {
+        rol: [2, 3], // Filtrar roles
+      },
+      attributes: { 
+        exclude: [
+          "password",
+          "password_reset_code",
+          "password_reset_code_expires",
+          "createdAt",
+          "updatedAt"
+        ] 
+      }, // Excluir campos sensibles/no necesarios
+      offset: parseInt(offset),
+      limit: parseInt(limit),
+    });
+
+    // Mapeo de roles
+    const users = rows.map((user) => ({
+      ...user.toJSON(),
+      rol: user.rol === 2 ? "Médico" : "Paciente",
+    }));
+
+    return res.json({
+      total: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: parseInt(page),
+      users,
+    });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
 //Eliminar usuario
 export const deleteUser = async (req, res) => {
@@ -40,7 +69,7 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
 //Actualizar usuario
 export const updateUser = async (req, res) => {
@@ -69,4 +98,4 @@ export const updateUser = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
