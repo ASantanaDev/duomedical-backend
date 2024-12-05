@@ -139,6 +139,7 @@ export const updateDoctor = async (req, res) => {
       segundo_nombre,
       primer_apellido,
       segundo_apellido,
+      email,
       contacto,
       descripcion,
       especialidades, // Array de IDs de especialidades
@@ -162,6 +163,7 @@ export const updateDoctor = async (req, res) => {
     searchedUser.primer_apellido = primer_apellido;
     searchedUser.segundo_apellido = segundo_apellido;
     searchedUser.contacto = contacto;
+    searchedUser.email = email;
     await searchedUser.save();
 
     // Actualizar información del médico

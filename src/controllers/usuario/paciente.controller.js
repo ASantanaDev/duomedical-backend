@@ -14,6 +14,7 @@ export const updatePatient = async (req, res) => {
       segundo_apellido,
       fecha_nacimiento,
       contacto,
+      email,
       tipo_sangre,
       peso,
       altura,
@@ -43,6 +44,7 @@ export const updatePatient = async (req, res) => {
       searchedUser.primer_apellido = primer_apellido;
       searchedUser.segundo_apellido = segundo_apellido;
       searchedUser.contacto = contacto;
+      searchedUser.email = email;
       await searchedUser.save();
     } else {
       return res.status(404).json({ error: "Usuario no encontrado" });
