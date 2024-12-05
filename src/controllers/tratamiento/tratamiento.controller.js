@@ -33,10 +33,15 @@ export const createTratamiento = async (req, res) => {
 export const getTratamientosPorCategoria = async (req, res) => {
   try {
     const { _id_categoria } = req.params;
+    const { page = 1, size = 10 } = req.query; // Parámetros de paginación con valores predeterminados
+    const limit = parseInt(size); // Cantidad de elementos por página
+    const offset = (parseInt(page) - 1) * limit; // Calcular desplazamiento
 
-    // Buscar los tratamientos de la categoría
-    const tratamientos = await Tratamiento.findAll({
+    // Buscar los tratamientos de la categoría con paginación
+    const { rows: tratamientos, count: totalItems } = await Tratamiento.findAndCountAll({
       where: { categoria: _id_categoria },
+      limit,
+      offset,
     });
 
     if (tratamientos.length === 0) {
@@ -45,6 +50,9 @@ export const getTratamientosPorCategoria = async (req, res) => {
 
     return res.json({
       tratamientos,
+      totalItems,
+      totalPages: Math.ceil(totalItems / limit),
+      currentPage: parseInt(page),
     });
   } catch (error) {
     console.error("Error al obtener tratamientos:", error);
@@ -53,6 +61,7 @@ export const getTratamientosPorCategoria = async (req, res) => {
     });
   }
 };
+
 
 // Actualizar un tratamiento
 export const updateTratamiento = async (req, res) => {
