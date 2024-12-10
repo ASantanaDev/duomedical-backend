@@ -30,9 +30,9 @@ export const Cita = sequelize.define(
             }
         },
         estado_cita: {
-            type: DataTypes.ENUM,
-            values: ['Ocupado', 'Desocupado'],
+            type: DataTypes.ENUM('Pendiente', 'Atendida', 'Cancelada'),
             allowNull: false,
+            defaultValue: 'Pendiente'
         },
         motivo_consulta: {
             type: DataTypes.TEXT,

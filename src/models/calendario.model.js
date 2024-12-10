@@ -23,10 +23,6 @@ export const Calendario = sequelize.define(
             type: DataTypes.DATE,
             allowNull: false
         },
-        estado_calendario: {
-            type: DataTypes.ENUM('Ocupado', 'Desocupado'),
-            allowNull: false
-        },
     },
     {
         timestamps: true,

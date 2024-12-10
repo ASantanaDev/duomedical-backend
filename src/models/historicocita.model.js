@@ -20,9 +20,9 @@ export const HistoricoCita = sequelize.define(
             allowNull: false,
         },
         estado_cita: {
-            type: DataTypes.ENUM,
-            values: ['Ocupado', 'Desocupado'],
+            type: DataTypes.ENUM('Pendiente', 'Atendida', 'Cancelada'),
             allowNull: false,
+            defaultValue: 'Pendiente'
         },
         motivo_consulta: {
             type: DataTypes.TEXT,
