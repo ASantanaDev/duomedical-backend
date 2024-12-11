@@ -21,6 +21,7 @@ app.use(cors({
         "https://localhost:4200",
         "https://duomedical-frontend.vercel.app/",
     ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
 app.use(express.json());
