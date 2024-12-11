@@ -19,6 +19,7 @@ app.use(cors({
     origin: [
         "http://localhost:4200",
         "https://localhost:4200",
+        "https://duomedical-frontend.vercel.app/",
     ],
     credentials: true
 }));
